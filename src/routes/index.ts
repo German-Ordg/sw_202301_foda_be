@@ -30,4 +30,7 @@ router.get('/', (_req, res) => {
 import empresasRouter from './empresas/empresas';
 router.use('/empresas',empresasRouter);
 //router.get royter.post router.put router.delete router.use
+
+import usuariosRouter from './usuarios/usuarios';
+router.use('/usuarios',usuariosRouter);
 export default router;
