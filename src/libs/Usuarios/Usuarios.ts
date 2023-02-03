@@ -3,7 +3,7 @@ export interface IUsuarios {
     correo: string;
     nombre: string;
     password: string;
-    roles?: [];
+    roles?: string[];
     creado?: Date;
     ultimoAcceso?:Date;
     observacion?:string;
@@ -36,14 +36,16 @@ export class Usuarios{
     return usuarioToReturn;
 }
     update(updateUsuario: IUsuarios){
+        let update=false;
         const newUsuario: IUsuarios[]= this.usuarios.map((emp)=>{
             if(emp.codigo === updateUsuario.codigo){
+                update=true;
                 return {...emp, ...updateUsuario, ultimoAcceso:new Date()};
             }
             return emp;
         });
         this.usuarios=newUsuario;
-        return true;
+        return update;
     }
     delete(codigo:string){
         const usuariosToDelete = this.usuarios.find((emp)=>{

@@ -51,14 +51,16 @@ export class Empresas{
     }
     update(updateEmpresa: IEmpresas){
         //vamos hacer inmutabilidad; map recorre el arreglo
+        let update= false;
         const newEmpresas: IEmpresas[]= this.empresas.map((emp)=>{
             if(emp.codigo === updateEmpresa.codigo){
+                update= true;
                 return {...emp, ...updateEmpresa, updated:new Date()};
             }
             return emp;
         });
         this.empresas=newEmpresas;
-        return true;
+        return update;
     }
     delete(codigo:string){
         const empresaToDelete = this.empresas.find((emp)=>{
