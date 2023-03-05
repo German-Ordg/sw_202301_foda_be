@@ -1,6 +1,6 @@
-import { IEmpresa } from "@dao/models/Empresas/IEmpresas";
+import { IUsuarios } from "@dao/models/Usuarios/IUsuarios";
 import { IDataAccessObject } from "@dao/IDataAccessObject";
-export class Empresas {
+export class usuarios {
   private dao: IDataAccessObject;
   constructor(dao: IDataAccessObject) {
     this.dao = dao;
@@ -11,18 +11,18 @@ export class Empresas {
   getById(id: string) {
     return this.dao.findByID(id);
   }
-  add(nuevaEmpresa: IEmpresa) {
+  add(nuevousuario: IUsuarios) {
     const date = new Date();
-    const nueva: IEmpresa = {
-      ...nuevaEmpresa,
-      created: date,
-      updated: date
+    const nueva: IUsuarios = {
+      ...nuevousuario,
+      creado: date,
+      ultimoAcceso: date
     }
     return this.dao.create(nueva);
   }
 
-  update(id: string, updateEmpresa: IEmpresa) {
-    const updateObject = { ...updateEmpresa, updated: new Date() };
+  update(id: string, updateUsuario: IUsuarios) {
+    const updateObject = { ...updateUsuario, ultimoAcceso: new Date() };
     return this.dao.update(id, updateObject);
   }
 
