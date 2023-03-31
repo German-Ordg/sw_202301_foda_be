@@ -29,9 +29,9 @@ export abstract class MongoDAOBase<T> implements IDataAccessObject {
   findAll() {
     return this.collection.find({}).toArray();
   }
-  findByID(id: string) {
+  findByID(id: string, options: FindOptions<T> = {}) {
     const _id: Filter<T> = new ObjectId(id) as Filter<T>;
-    return this.collection.findOne({ _id });
+    return this.collection.findOne({ _id }, options);
   }
   create(newEntity: Partial<T>) {
     return this.collection.insertOne(newEntity as OptionalUnlessRequiredId<T>);
@@ -59,6 +59,12 @@ export abstract class MongoDAOBase<T> implements IDataAccessObject {
   }
   rawUpdate(filter: Filter<T>, update: UpdateFilter<T>){
     return this.collection.updateOne(filter, update);
+  }
+  getIDFromString(id: string | number | ObjectId  | Uint8Array){
+    return new ObjectId(id);
+  }
+  isValidId(id: string | number | ObjectId  | Uint8Array) {
+    return ObjectId.isValid(id);
   }
 
 }

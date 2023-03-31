@@ -46,14 +46,16 @@ router.post('/new', async (req, res)=>{
         password="123456789",
         roles=[]
     } = req.body;
-    const newEmpresa: IUsuarios = {
-    codigo ,
-    correo,
-    nombre,
-    roles,
-    password
+    const newIUsuario: IUsuarios = {
+        codigo,
+        correo,
+        nombre,
+        roles,
+        password,
+        createdAt: undefined,
+        updatedAt: undefined
     }
-    if (await usuariosModel.add(newEmpresa)){ 
+    if (await usuariosModel.add(newIUsuario)){ 
         return res.status(200).json({"created":true});
     }
     return res.status(404).json(
@@ -85,7 +87,9 @@ router.put('/upd/:id', async(req, res)=>{
         nombre,
         password,
         roles,
-        observacion
+        observacion,
+        createdAt: undefined,
+        updatedAt: undefined
     };
 
     if(await usuariosModel.update(id,updateUsuario)){

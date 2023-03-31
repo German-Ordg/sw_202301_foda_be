@@ -1,6 +1,8 @@
 import express from 'express';
 const router  = express.Router();
 
+import {validateKeyMiddleWare} from './middlewares/apikeyValidator';
+import {validateJwtMiddleWare} from './middlewares/jwtTokenValidator';
 
 
 // REST API
@@ -28,15 +30,30 @@ router.get('/version', (_req, res)=>{
   res.json(jsonResp);
  });
 
+import securityRoutes from './security/security';
+router.use('/security', validateKeyMiddleWare, securityRoutes);
+
+import empresasRouter from './empresas/empresas';
+router.use('/empresas', validateKeyMiddleWare, validateJwtMiddleWare, empresasRouter);
+
+import fodaRouter from './foda/foda';
+router.use('/foda', validateKeyMiddleWare, validateJwtMiddleWare, fodaRouter);
+
+import usuariosRouter from './usuarios/usuarios';
+router.use('/usuarios',validateKeyMiddleWare, validateJwtMiddleWare,usuariosRouter);
+ //router.get  router.post router.put router.delete  router.use
+/*
+import securityRoutes from './security/security';
+router.use('/security',  securityRoutes);
+
 import empresasRouter from './empresas/empresas';
 router.use('/empresas', empresasRouter);
 
 import fodaRouter from './foda/foda';
 router.use('/foda', fodaRouter);
- //router.get  router.post router.put router.delete  router.use
 
-
- import usuariosRouter from './usuarios/usuarios';
+import usuariosRouter from './usuarios/usuarios';
 router.use('/usuarios',usuariosRouter);
-
+*/
+ //router.get  router.post router.put router.delete  router.use
 export default router;
